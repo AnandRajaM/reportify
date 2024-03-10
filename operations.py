@@ -9,7 +9,7 @@ from reportlab.graphics.shapes import Line, Polygon
 
 client = OpenAI(
     # defaults to os.environ.get("OPENAI_API_KEY")
-    api_key='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',
+    api_key='api-key',
 )
 
 
