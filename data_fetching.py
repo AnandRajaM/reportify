@@ -13,7 +13,7 @@ model = genai.GenerativeModel('gemini-pro')
 
 #MongoDB connection & data fetching
 def get_patient_docs(customer_name,booking_date):
-    cluster = MongoClient("mongodb+srv://anandrm1999:hqC4zZnKxSs55SzJ@cluster0.eqwlhpf.mongodb.net/")
+    cluster = MongoClient("<mogodb-connection>")
     db = cluster['RedCliffe_Labs']
     collection = db['patient_details']
     # Construct query
