@@ -7,13 +7,7 @@ from pymongo import MongoClient
 
 
 #Client creations & tokens
-client1 = OpenAI(
-    api_key='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',
-)
-client2 = OpenAI(
-    api_key='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',
-)
-genai.configure(api_key = "AIzaSyAoKZQ4f_3sEX3CU7c_ImIt3HLVNwtMPE0")
+genai.configure(api_key = "<api-key>")
 model = genai.GenerativeModel('gemini-pro')
 
 
