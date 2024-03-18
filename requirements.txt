@@ -1,0 +1,13 @@
+flask
+pymongo
+langchain.llms==1.0.0
+google.generativeai
+reportlab
+PyPDF2
+barcode
+html
+css
+tailwindcss
+javascript
+gsap
+jsonify
