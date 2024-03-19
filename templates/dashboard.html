@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+</head>
+<body>
+    <h1>Welcome, {{ username }}!</h1>
+    
+    <h2>Select Parameter:</h2>
+    <select id="parameterSelect">
+        <option value="">-- Select Parameter --</option>
+        {% for parameter_name in parameter_names %}
+            <option value="{{ parameter_name }}">{{ parameter_name }}</option>
+        {% endfor %}
+    </select>
+
+    <div id="parameterData">
+        <!-- JSON values for the selected parameter will be displayed here -->
+    </div>
+
+    <script>
+document.getElementById('parameterSelect').addEventListener('change', function() {
+    var selectedParameter = this.value;
+    var parametersData = JSON.parse('{{ parameters_data | default("{}") | tojson | safe }}'); // Use default filter to handle undefined
+    var selectedParameterData = parametersData[selectedParameter];
+    var parameterDataHtml = '<h2>Parameter Data:</h2>';
+    if (selectedParameterData) {
+        parameterDataHtml += '<ul>';
+        selectedParameterData.forEach(function(parameter) {
+            parameterDataHtml += '<li><strong>' + parameter.parameter_name + '</strong>: ' + parameter.parameter_value + '</li>';
+        });
+        parameterDataHtml += '</ul>';
+    } else {
+        parameterDataHtml += '<p>No data available for the selected parameter.</p>';
+    }
+    document.getElementById('parameterData').innerHTML = parameterDataHtml;
+});
+
+
+    </script>
+    
+    
+</body>
+</html>
