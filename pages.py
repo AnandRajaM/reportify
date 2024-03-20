@@ -11,20 +11,21 @@ from barcode import EAN13
 from barcode.writer import ImageWriter 
 
 
-
-pdfmetrics.registerFont(TTFont('SofiaPro', './Resources/sofiapro-light.ttf')) 
-pdfmetrics.registerFont(TTFont('EastmanBold','./Resources/Eastman-bold.ttf'))
-pdfmetrics.registerFont(TTFont('EastmanRegular','./Resources/Eastman-regular.ttf'))
-pdfmetrics.registerFont(TTFont('SofiaProBold','./Resources/SofiaPro-Bold.ttf'))
-pdfmetrics.registerFont(TTFont('RobotoRegular','./Resources/Roboto-Regular.ttf'))
-pdfmetrics.registerFont(TTFont('RobotoBold','./Resources/Roboto-Bold.ttf'))
+#Registering Fonts 
+pdfmetrics.registerFont(TTFont('SofiaPro', './Resources/Fonts/sofiapro-light.ttf')) 
+pdfmetrics.registerFont(TTFont('EastmanBold','./Resources/Fonts/Eastman-bold.ttf'))
+pdfmetrics.registerFont(TTFont('EastmanRegular','./Resources/Fonts/Eastman-regular.ttf'))
+pdfmetrics.registerFont(TTFont('SofiaProBold','./Resources/Fonts/SofiaPro-Bold.ttf'))
+pdfmetrics.registerFont(TTFont('RobotoRegular','./Resources/Fonts/Roboto-Regular.ttf'))
+pdfmetrics.registerFont(TTFont('RobotoBold','./Resources/Fonts/Roboto-Bold.ttf'))
 
 styles = getSampleStyleSheet()
+# Default font
 styles['Normal'].fontName = 'SofiaPro'
 
 from data_fetching import *
 
-
+# Creating Cover page
 def create_cover_pdf(filename, page_size, cover_image_path,customer_name):
     c = canvas.Canvas(filename, pagesize=page_size)
     c.drawImage(cover_image_path, 0, 0, width=page_size[0], height=page_size[1])
@@ -33,7 +34,7 @@ def create_cover_pdf(filename, page_size, cover_image_path,customer_name):
     c.drawString(22, 302, customer_name+"     M  26")
     c.save()
 
-
+# Mergeing all final report pages
 def merge_pdfs(output_filename, *input_filenames):
     pdf_merger = PyPDF2.PdfMerger()
     for input_filename in input_filenames:
@@ -41,24 +42,26 @@ def merge_pdfs(output_filename, *input_filenames):
     with open(output_filename, 'wb') as output_file:
         pdf_merger.write(output_file)
 
-
+#Creating RBC report page
 def create_rbc_report_page(out_filename, page_size, report_png, list_patient_data,booking_id):
     highlighted_tests = []
 
     c = canvas.Canvas(out_filename, pagesize=page_size)
     c.drawImage(report_png, 0, 0, width=page_size[0], height=page_size[1])
 
+    # Default initial x and y coordinates
     init_x = 22
     init_y= 630
 
     booking_id = "000000"+str(booking_id)
 
     for test in list_patient_data[1]:
+        # Checks if the y-coordinate is less than 100 , if not then it creates a new page and continues to write the report
         if init_y<=100:
             c.showPage()
             c.drawImage("./Resources/rbc_page2.png", 0, 0, width=page_size[0], height=page_size[1])
 
-            
+            #Creating Barcode
             my_barcode = EAN13(booking_id, writer=ImageWriter()) 
             my_barcode.save("./dynamic_resource/"+booking_id)
             c.drawImage("./dynamic_resource/"+booking_id+".png", 16, 147, width=100, height=40)
@@ -67,6 +70,7 @@ def create_rbc_report_page(out_filename, page_size, report_png, list_patient_dat
 
             init_y = 630  # Reset the initial y-coordinate
         
+        # Checks if the test is a header or not
         if isinstance(test["parameter_name"],str) and test['parameter_value']=='HEAD':
                 init_y+= -10
                 c.setFont("RobotoBold",15) 
@@ -75,6 +79,7 @@ def create_rbc_report_page(out_filename, page_size, report_png, list_patient_dat
                 init_y+= -18
                 continue
         else:
+                # Checks if the test is highlighted or not
                 if (test['parameter_value'] > test['upper_bound'] or test['parameter_value'] < test['lower_bound']) and test['is_highlighted']:
                     c.setFillColorRGB(219/255,68/255,55/255)
                     highlighted_tests.append(["Complete Blood Count (CBC)",[test['parameter_name'],test['parameter_value']]])
@@ -91,6 +96,7 @@ def create_rbc_report_page(out_filename, page_size, report_png, list_patient_dat
                     c.drawString(init_x, init_y, "Method : " +test['test_method'].title())
                 init_y+= -17
                 continue
+    # Fianl note and advice created if the y-coordinate is greater than 360
     if init_y > 360:
         c.setFont("RobotoBold",15) 
         c.drawString(22, 330, "NOTE : ")
@@ -105,21 +111,25 @@ def create_rbc_report_page(out_filename, page_size, report_png, list_patient_dat
     c.save()
     return highlighted_tests
 
+# Creating Urine Routine and Microscopic Examination report page
 def create_urme_report_page(out_filename, page_size, report_png, list_patient_data,booking_id):
     highlighted_tests = []
     c = canvas.Canvas(out_filename, pagesize=page_size)
     c.drawImage(report_png, 0, 0, width=page_size[0], height=page_size[1])
 
+    # Default initial x and y coordinates
     init_x = 22
     init_y= 630
 
     booking_id = "000000"+str(booking_id)
 
     for test in list_patient_data[1]:
+        # Checks if the y-coordinate is less than 100 , if not then it creates a new page and continues to write the report
         if init_y<=100:
             c.showPage()
             c.drawImage("./Resources/urme_page2.png", 0, 0, width=page_size[0], height=page_size[1])
             
+            #Creating Barcode
             my_barcode = EAN13(booking_id, writer=ImageWriter()) 
             my_barcode.save("./dynamic_resource/"+booking_id)
             c.drawImage("./dynamic_resource/"+booking_id+".png", 16, 147, width=100, height=40)
@@ -128,6 +138,7 @@ def create_urme_report_page(out_filename, page_size, report_png, list_patient_da
 
             init_y = 630  # Reset the initial y-coordinate
         
+        # Checks if the test is a header or not
         if isinstance(test["parameter_name"],str) and test['parameter_value']=='HEAD':
                 init_y+= -10
                 c.setFont("RobotoBold",15) 
@@ -152,6 +163,7 @@ def create_urme_report_page(out_filename, page_size, report_png, list_patient_da
                     c.drawString(init_x, init_y, "Method : " +test['test_method'].title())
                 init_y+= -17
                 continue
+    # Fianl note and advice created if the y-coordinate is greater than 360
     if init_y > 360:
         c.setFont("RobotoBold",15) 
         c.drawString(22, 330, "NOTE : ")
@@ -166,26 +178,32 @@ def create_urme_report_page(out_filename, page_size, report_png, list_patient_da
     return highlighted_tests
 
 
-
+# Creating report page for other tests
 def create_report_page(out_filename, page_size, report_png, tuple_of_test,booking_id):
     highlighted_tests = []
+
+    # Initialising variables
     tests_left_to_print = len(tuple_of_test[1])
     init_tests = tests_left_to_print
-    c1=1
+    tests_printed=1
     final_page=False
     init_tittle = False
     booking_id = "000000"+str(booking_id)
-    c = canvas.Canvas(out_filename, pagesize=page_size)
-    for test in tuple_of_test[1]:
-        print(c1)
 
+
+    c = canvas.Canvas(out_filename, pagesize=page_size)
+
+    for test in tuple_of_test[1]:
+        # Checks if its the final page to print
         if tests_left_to_print >= 2 or final_page :
             if tests_left_to_print == 2:
                 final_page=True
-            if c1>2:
-                if c1%2 != 0:
+
+            #If the tests printed are odd then it creates a new page and continues to write the report
+            if tests_printed>2:
+                if tests_printed%2 != 0:
                     c.showPage()
-            if c1%2 !=0 :
+            if tests_printed%2 !=0 :
                 c.drawImage(report_png, 0, 0, width=page_size[0], height=page_size[1])
                 c.setFont("RobotoBold", 20)
                 c.setFillColorRGB(0,0,0)
@@ -218,10 +236,12 @@ def create_report_page(out_filename, page_size, report_png, tuple_of_test,bookin
                 paragraph.wrap(200, 280)
                 paragraph.drawOn(c, 22, 648 - paragraph.height)
 
+                #Test Value
                 c.setFont("RobotoBold", 17) 
                 c.setFillColorRGB(0,61/255,108/255)
                 c.drawString(289, 652, "Test Value : " +test['parameter_value'] + " " + test['unit'])
 
+                #Checks if the test is highlighted or not & Prints accordingly
                 if test['parameter_value'] > test['upper_bound'] :
                     c.setFont("SofiaProBold", 15)    
                     r,g,b = 219,68,55
@@ -476,12 +496,12 @@ def create_report_page(out_filename, page_size, report_png, tuple_of_test,bookin
                     paragraph3.drawOn(c, 455, 263 - paragraph3.height)
 
 
-            c1+=1
+            tests_printed+=1
             if init_tests !=2:
                 tests_left_to_print -= 1
 
         elif tests_left_to_print == 1 and final_page == False:
-                if c1 != 1:
+                if tests_printed != 1:
                     c.showPage()
                 c.drawImage("./Resources/1test_report_page.png", 0, 0, width=page_size[0], height=page_size[1])
                 c.setFont("RobotoBold", 20)
@@ -633,15 +653,17 @@ def create_report_page(out_filename, page_size, report_png, tuple_of_test,bookin
                     paragraph3.drawOn(c, 455, 495 - paragraph3.height)
 
 
-                c1+=1
+                tests_printed+=1
                 tests_left_to_print -= 1
 
     c.save()
     return highlighted_tests
         
 
-
+# Creating Summary page with body image
 def create_body_report_page(out_filename, page_size, report_png, highlighted_tests,test_names,booking_id):
+
+    #Initialising variables
     c = canvas.Canvas(out_filename, pagesize=page_size)
     c.drawImage(report_png, 0, 0, width=page_size[0], height=page_size[1])
     init_y_highlighted = 645
@@ -650,19 +672,22 @@ def create_body_report_page(out_filename, page_size, report_png, highlighted_tes
     message_style = ParagraphStyle(name='Message', fontName='SofiaPro', fontSize=8)
     overflow_style = ParagraphStyle(name='Overflow', fontName='RobotoRegular', fontSize=10, textColor='#97CF83')
 
+    #Iterating through the highlighted tests
     for test in highlighted_tests:
         if init_y_highlighted > 100 :
             init_y_highlighted+= -45
 
+            #Printing Styles (Color , line width , line dashes)
             c.setStrokeColorRGB(255, 0, 0)  
             c.setLineWidth(0.75)  
-            c.setDash()
+            c.setDash() 
             c.line(22, init_y_highlighted, 150, init_y_highlighted)  
 
             heading = Paragraph(str(test[0]), heading_style) 
             heading.wrap(200, 15)
             heading.drawOn(c, 22, init_y_highlighted+5)
             
+            #Checks if test is in reference points and highlights it
             for item in ref_points:
                 if item[0] in test[0]:
                     c.setStrokeColorRGB(255, 0, 0)  
@@ -682,6 +707,7 @@ def create_body_report_page(out_filename, page_size, report_png, highlighted_tes
     init_y2 = 645
     overflow_tests = []
 
+    # Checks for tests which are not higlighted and prints them
     for test in test_names:
         if not_highlighted_printed < 10 :
             if test[0] not in [item[0] for item in highlighted_tests]:
@@ -701,7 +727,7 @@ def create_body_report_page(out_filename, page_size, report_png, highlighted_tes
                 overflow_tests.append(test[0])
 
 
-    
+    # If there are more than 10 tests which are not highlighted then it prints the overflow message
     if overflow_tests != []:
         init_y2+= -45        
         c.drawImage("./Resources/green_box2.png",420,init_y2-22,width=125,height=26,mask='auto')
