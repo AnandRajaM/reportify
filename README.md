@@ -39,7 +39,7 @@ https://github.com/AnandRajaM/tinkerquest2024/assets/142321494/b66bb259-1256-46e
 - **Diagnostic Test Classification:** The retrieved diagnostic tests are classified into two main types:
   - Tests with Multiple Sub-tests: Examples include Kidney Function Test (KFT) with sub-tests like Blood Urea, Creatinine, etc.
   - Single Value Tests: Tests like RBC count, Urine Routine, etc., which provide a single numerical value.
-  - 
+   
 - **Report Generation:**
   - Multiple Sub-tests: For tests with multiple sub-tests, the program generates detailed reports for each sub-test, providing a comprehensive overview of the individual parameters measured.
   - Single Value Tests: For tests yielding a single value, the program creates easily readable reports with graphical representations. A bar graph with green, red, and gray areas indicates normal, high, and low values, respectively. The user's test result is positioned on the bar for quick interpretation.
