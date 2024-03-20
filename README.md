@@ -47,7 +47,7 @@ https://github.com/AnandRajaM/tinkerquest2024/assets/142321494/b66bb259-1256-46e
 - **Summary Page Creation:** The program generates a summary page consolidating all test results. Tests are categorized as highlighted (indicating abnormal values) or non-highlighted (normal values).
 Highlighted tests are visually linked to a gray body diagram, with lines drawn to the respective organ or body part affected by the abnormal result. For instance, if a Kidney Function Test result is abnormal, a line is drawn to the kidney region on the gray body image.
 
--** Cover Page Generation:** Each report is accompanied by a customized cover page, providing patient-specific details and enhancing the presentation of the diagnostic report.
+** Cover Page Generation:** Each report is accompanied by a customized cover page, providing patient-specific details and enhancing the presentation of the diagnostic report.
 
 ## Technologies Used
 
