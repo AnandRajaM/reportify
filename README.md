@@ -27,6 +27,7 @@ https://github.com/AnandRajaM/tinkerquest2024/assets/142321494/b66bb259-1256-46e
 
 ## Screenshots
 ![App Screenshot](https://github.com/AnandRajaM/tinkerquest2024/blob/main/images/website_landing.png)
+![App Screenshot](https://github.com/AnandRajaM/tinkerquest2024/blob/main/images/dashboard.png)
 ![App Screenshot](https://github.com/AnandRajaM/tinkerquest2024/blob/main/images/coverpage.png)
 ![App Screenshot](https://github.com/AnandRajaM/tinkerquest2024/blob/main/images/summary.png)
 ![App Screenshot](https://github.com/AnandRajaM/tinkerquest2024/blob/main/images/rbc.png)
