@@ -38,11 +38,11 @@ https://github.com/AnandRajaM/tinkerquest2024/assets/142321494/b66bb259-1256-46e
 
 - **Diagnostic Test Classification:** The retrieved diagnostic tests are classified into two main types:
   - Tests with Multiple Sub-tests: Examples include Kidney Function Test (KFT) with sub-tests like Blood Urea, Creatinine, etc.
-  - Single Value Tests: Tests like RBC count, Urine Routine, etc., which provide a single numerical value.
+  - Multi Value Tests: Tests like RBC count, Urine Routine, etc., which pincludes multiple values.
    
 - **Report Generation:**
-  - Multiple Sub-tests: For tests with multiple sub-tests, the program generates detailed reports for each sub-test, providing a comprehensive overview of the individual parameters measured.
-  - Single Value Tests: For tests yielding a single value, the program creates easily readable reports with graphical representations. A bar graph with green, red, and gray areas indicates normal, high, and low values, respectively. The user's test result is positioned on the bar for quick interpretation.
+  - Multiple Sub-tests: For tests with multiple sub-tests, the program generates detailed reports for each sub-test, providing a comprehensive overview of the individual parameters measured. The program creates easily readable reports with graphical representations. A horizontal bar with green & red areas indicating normal, high, and low values. The user's test result is positioned on the bar for quick interpretation.
+  - Multi Value Tests: For these tests , the program generates a table like report containing Test Description , Values , Units and referene range for differnt  parameters such as rbc , wbc , platelets etc. Along with this , each "Multi Value report" also has a note & adnice at the end , which can be added by the respective medical proffesional.
 
 - **Summary Page Creation:** The program generates a summary page consolidating all test results. Tests are categorized as highlighted (indicating abnormal values) or non-highlighted (normal values).
 Highlighted tests are visually linked to a gray body diagram, with lines drawn to the respective organ or body part affected by the abnormal result. For instance, if a Kidney Function Test result is abnormal, a line is drawn to the kidney region on the gray body image.
