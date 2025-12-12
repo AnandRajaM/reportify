@@ -1,0 +1,73 @@
+  {"_id": {
+    "$oid": "65436af849afd751c456ccb9"
+  },
+  "booking_id": 6064579,
+  "customer_name": "Sarika Singh",
+  "collection_date": "2023-11-02 00:00:00 UTC",
+  "booking_date": "2023-11-01 00:00:00 UTC",
+  "lead_id": 8032545,
+  "uhid": 5190833,
+  "useruuid": {
+    "$binary": {
+      "base64": "iEP/haC/QFmbRttS0953BQ==",
+      "subType": "04"
+    }
+  },
+  "test_id": 5667,
+  "test_code": "BC063",
+  "test_name": "Thyroid Profile Total",
+  "test_values": [
+    {
+      "test_method": "",
+      "test_parameter_id": 7050768,
+      "parameter_name": "TRIIODOTHYRONINE ( T3 )",
+      "parameter_value": "96.23",
+      "is_highlighted": false,
+      "lower_bound": "35",
+      "display_value": "35 - 193",
+      "upper_bound": "193",
+      "impression": "N",
+      "unit": "ng/dL",
+      "other_male_id": "44"
+    },
+    {
+      "test_method": "",
+      "test_parameter_id": 7050769,
+      "parameter_name": "TOTAL THYROXINE ( T4 )",
+      "parameter_value": "6.49",
+      "is_highlighted": false,
+      "lower_bound": "4.87",
+      "display_value": "4.87 - 11.72",
+      "upper_bound": "11.72",
+      "impression": "N",
+      "unit": "µg/dL",
+      "other_male_id": "4"
+    },
+    {
+      "test_method": "CMIA",
+      "test_parameter_id": 7052387,
+      "parameter_name": "THYROID STIMULATING HORMONE  (Ultrasensitive)",
+      "parameter_value": "4.4928",
+      "is_highlighted": false,
+      "lower_bound": "0.35",
+      "display_value": "0.35 - 4.94",
+      "upper_bound": "4.94",
+      "impression": "N",
+      "unit": "uIU/mL",
+      "other_male_id": "41"
+    }
+  ],
+  "created_at": "2023-11-02 09:25:12.613 UTC",
+  "updated_at": "2023-11-02 09:25:12.613 UTC",
+  "__hevo_id": "3be12f5b27fbe5cd9c2b58bdab8af2f317f32cd2bffff51ba3c765223fb9b5b2",
+  "__hevo__ingested_at": {
+    "$numberLong": "1698917364978"
+  },
+  "__hevo__loaded_at": {
+    "$numberLong": "1698921148662"
+  },
+  "__hevo__marked_deleted": false,
+  "__hevo__source_modified_at": {
+    "$numberLong": "1698917112000"
+  }
+}
