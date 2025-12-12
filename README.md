@@ -1,228 +1,170 @@
-# 🏥 Reportify - Medical Report Generator
 
-A professional medical report generator that converts JSON patient data to beautifully formatted PDF reports.
+# Reportify - Simplifying Diagnostic Reports
 
-## 🌟 Features
 
-- **FastAPI REST API** - Modern, fast API for JSON to PDF conversion
-- **Flask Web Interface** - Traditional web app for patient dashboard
-- **MongoDB Integration** - Store and retrieve patient health data
-- **AI-Powered Insights** - Gemini AI for medical test summaries and recommendations
-- **Professional PDF Reports** - High-quality medical reports with custom fonts and branding
-- **Barcode Generation** - Unique barcodes for each report
+## Overview
+The Reportify Diagnostic Test Reporting System is a project developed by the "a² Team" for TinkerQuest'24, a hackathon hosted by IIT Roorkee. The system aims to provide users with intuitive and informative reports for diagnostic test results, enhancing their understanding and enabling better healthcare decisions.
+## Features
+- **Smart Report Generation:** Automatically generates comprehensive reports for diagnostic test results, including flagged tests, normal tests, and graphical representation of abnormalities.
+- **Customized Cover Pages:** Reports are generated with cover pages, barcodes, and summaries for enhanced presentation.
+- **Visualization:** Utilizes gray body diagrams to highlight flagged test results.
+- **Test Definitions:** Provides detailed descriptions and use examples for each diagnostic test.
+- **Ranges Representation:** Displays low-normal-high ranges for test parameters, aiding interpretation.
+- **ML Model Integration:** Utilizes langchain.llms - Ollama for generating summaries and possible causes for abnormal test results.
+- **User Dashboard:** Provides users with a personalized dashboard to view past test results and generate/print reports.
+- **Interactive UI:** Developed with HTML, CSS, Tailwind CSS, and JavaScript for a seamless user experience.
+- **Backend Storage:** Stores diagnostic reports data using MongoDB in the cloud (AWS), managed with PyMongo.
+- **Gemini API Integration:** Utilizes Gemini API for fetching data on test summaries.
+- **Barcode & QR Generation:** Includes barcode&QRgeneration for easy identification and tracking of reports.
+## Demo
 
-## 📁 Project Structure
+Check it out on our live website : https://reportifylanding.vercel.app/
 
-```
-reportify/
-├── app/
-│   ├── api/                    # FastAPI endpoints
-│   │   └── v1/
-│   │       ├── endpoints/      # API route handlers
-│   │       └── router.py       # API router configuration
-│   ├── core/                   # Core functionality
-│   │   ├── config.py          # Application settings
-│   │   └── database.py        # Database connections
-│   ├── models/                 # Pydantic data models
-│   │   └── report.py          # Report schemas
-│   ├── services/               # Business logic
-│   │   ├── data_fetching.py   # Data retrieval & AI
-│   │   └── pdf_generator.py   # PDF generation service
-│   ├── utils/                  # Utilities
-│   │   └── pdf_pages.py       # PDF page builders
-│   └── web/                    # Flask web routes
-│       └── routes.py          # Web UI routes
-├── static/                     # Static assets (CSS, JS, images)
-├── templates/                  # HTML templates
-├── resources/                  # Fonts and resources
-│   └── fonts/                 # Custom fonts for PDFs
-├── outputs/                    # Generated files
-│   └── generated_pdfs/        # Output PDF reports
-├── tests/                      # Test suite
-├── main.py                     # FastAPI application entry
-├── wsgi.py                     # Flask application entry
-├── requirements.txt            # Python dependencies
-└── .env.example               # Environment variables template
-```
+Or watch a video here
 
-## 🚀 Quick Start
+https://github.com/AnandRajaM/tinkerquest2024/assets/142321494/b66bb259-1256-46ea-9949-ae29e5a36d7f
 
-### Prerequisites
 
-- Python 3.9+
-- MongoDB
-- Google Gemini API key
+## Screenshots
+![App Screenshot](https://github.com/AnandRajaM/tinkerquest2024/blob/main/images/website_landing.png)
+![App Screenshot](https://github.com/AnandRajaM/tinkerquest2024/blob/main/images/dashboard.png)
+![App Screenshot](https://github.com/AnandRajaM/tinkerquest2024/blob/main/images/coverpage.png)
+![App Screenshot](https://github.com/AnandRajaM/tinkerquest2024/blob/main/images/summary.png)
+![App Screenshot](https://github.com/AnandRajaM/tinkerquest2024/blob/main/images/rbc.png)
+![App Screenshot](https://github.com/AnandRajaM/tinkerquest2024/blob/main/images/report_page.png)
+![App Screenshot](https://github.com/AnandRajaM/tinkerquest2024/blob/main/images/value.png)
 
-### Installation
+## Brief on the working 
+- **Data Retrieval:** The program begins by retrieving data from the MongoDB cloud database hosted on AWS. Using the customer/patient name and booking date as search parameters, it identifies all diagnostic tests conducted on that particular date.
 
-1. **Clone the repository**
-```bash
-git clone https://github.com/AnandRajaM/reportify.git
-cd reportify
-```
+- **Diagnostic Test Classification:** The retrieved diagnostic tests are classified into two main types:
+  - Tests with Multiple Sub-tests: Examples include Kidney Function Test (KFT) with sub-tests like Blood Urea, Creatinine, etc.
+  - Multi Value Tests: Tests like RBC count, Urine Routine, etc., which includes multiple values.
+   
+- **Report Generation:**
+  - Multiple Sub-tests: For tests with multiple sub-tests, the program generates detailed reports for each sub-test, providing a comprehensive overview of the individual parameters measured. The program creates easily readable reports with graphical representations. A horizontal bar with green & red areas indicating normal, high, and low values. The user's test result is positioned on the bar for quick interpretation.
+  - Multi Value Tests: For these tests , the program generates a table like report containing Test Description , Values , Units and referene range for differnt  parameters such as rbc , wbc , platelets etc. Along with this , each "Multi Value report" also has a note & advice section at the end , which can be added by the respective medical proffesional.
 
-2. **Create virtual environment**
-```bash
-python -m venv venv
-# Windows
-venv\Scripts\activate
-# Linux/Mac
-source venv/bin/activate
-```
+- **Summary Page Creation:** The program generates a summary page consolidating all test results. Tests are categorized as highlighted (indicating abnormal values) or non-highlighted (normal values).
+Highlighted tests are visually linked to a gray body diagram, with lines drawn to the respective organ or body part affected by the abnormal result. For instance, if a Kidney Function Test result is abnormal, a line is drawn to the kidney region on the gray body image.
 
-3. **Install dependencies**
-```bash
-pip install -r requirements.txt
-```
+- **Cover Page Generation:** Each report is accompanied by a customized cover page, providing patient-specific details and enhancing the presentation of the diagnostic report.
 
-4. **Configure environment**
-```bash
-cp .env.example .env
-# Edit .env with your credentials
-```
+## Technologies Used
 
-5. **Set up MongoDB**
-- Ensure MongoDB is running
-- Update `MONGODB_URL` in `.env`
+### Frontend
+- HTML
+- CSS
+- Tailwind CSS
+- JavaScript
+- Flask (for backend communication)
 
-## 🎯 Usage
+### Backend
+- MongoDB (AWS)
+- PyMongo
+- LangChain.llms - Ollama (Machine Learning Model)
 
-### Running FastAPI (Recommended for APIs)
+### Report Generation
+- Google.generativeai
+- ReportLab
+- PyPDF2 
+- Barcode (EAN13)
 
-```bash
-# Development
-uvicorn main:app --reload
+## Machine Learning Model
+Our Smart Diagnostic Report Generator incorporates the LangChain.llms - Ollama machine learning model to enhance the interpretability of diagnostic test results. This model plays a crucial role in providing simple summaries of specific tests, assisting users in understanding their results more comprehensively.
+### LangChain.llms - Ollama
+LangChain.llms - Ollama is a state-of-the-art language model trained on a large corpus of medical texts and healthcare literature. Leveraging the power of large language models (LLMs) like GPT-3, LangChain.llms - Ollama is fine-tuned specifically for medical applications, making it adept at understanding and generating medical text.
 
-# Production
-uvicorn main:app --host 0.0.0.0 --port 8000
-```
-
-Access API documentation: `http://localhost:8000/api/docs`
-
-### Running Flask (Web UI)
-
-```bash
-# Development
-python wsgi.py
-
-# Production with Gunicorn
-gunicorn wsgi:app -w 4 -b 0.0.0.0:5000
-```
-
-Access web interface: `http://localhost:5000`
-
-## 📡 API Endpoints
-
-### Health Check
-```http
-GET /api/v1/reports/health
-```
-
-### Generate Report from Database
-```http
-POST /api/v1/reports/generate-report
-Content-Type: application/json
-
-{
-  "customer_name": "John Doe",
-  "booking_date": "2023-11-01 00:00:00 UTC",
-  "include_highlights": true
-}
-```
-
-### Convert JSON to PDF
-```http
-POST /api/v1/reports/json-to-pdf
-Content-Type: application/json
-
-{
-  "patient_data": {
-    "customer_name": "Jane Smith",
-    "booking_date": "2023-12-01",
-    "booking_id": "BK123456",
-    "tests": [...]
+### Functionality
+**Summarization:** Given a specific input query related to a diagnostic test (e.g., "{test} high"), LangChain.llms - Ollama generates a concise summary of the test along with potential causes for abnormal results. This summarization capability aids users in interpreting their test results effectively.
+## Sample Dataset
+```{
+  "_id": {
+    "$oid": "65436af849afd751c456ccb9"
   },
-  "template_type": "standard",
-  "include_barcode": true
+  "booking_id": 6064579,
+  "customer_name": "Sarika Singh",
+  "collection_date": "2023-11-02 00:00:00 UTC",
+  "booking_date": "2023-11-01 00:00:00 UTC",
+  "lead_id": 8032545,
+  "uhid": 5190833,
+  "useruuid": {
+    "$binary": {
+      "base64": "iEP/haC/QFmbRttS0953BQ==",
+      "subType": "04"
+    }
+  },
+  "test_id": 5667,
+  "test_code": "BC063",
+  "test_name": "Thyroid Profile Total",
+  "test_values": [
+    {
+      "test_method": "",
+      "test_parameter_id": 7050768,
+      "parameter_name": "TRIIODOTHYRONINE ( T3 )",
+      "parameter_value": "96.23",
+      "is_highlighted": false,
+      "lower_bound": "35",
+      "display_value": "35 - 193",
+      "upper_bound": "193",
+      "impression": "N",
+      "unit": "ng/dL",
+      "other_male_id": "44"
+    },
+    {
+      "test_method": "",
+      "test_parameter_id": 7050769,
+      "parameter_name": "TOTAL THYROXINE ( T4 )",
+      "parameter_value": "6.49",
+      "is_highlighted": false,
+      "lower_bound": "4.87",
+      "display_value": "4.87 - 11.72",
+      "upper_bound": "11.72",
+      "impression": "N",
+      "unit": "µg/dL",
+      "other_male_id": "4"
+    },
+    {
+      "test_method": "CMIA",
+      "test_parameter_id": 7052387,
+      "parameter_name": "THYROID STIMULATING HORMONE  (Ultrasensitive)",
+      "parameter_value": "4.4928",
+      "is_highlighted": false,
+      "lower_bound": "0.35",
+      "display_value": "0.35 - 4.94",
+      "upper_bound": "4.94",
+      "impression": "N",
+      "unit": "uIU/mL",
+      "other_male_id": "41"
+    }
+  ],
+  "created_at": "2023-11-02 09:25:12.613 UTC",
+  "updated_at": "2023-11-02 09:25:12.613 UTC",
+  "__hevo_id": "3be12f5b27fbe5cd9c2b58bdab8af2f317f32cd2bffff51ba3c765223fb9b5b2",
+  "__hevo__ingested_at": {
+    "$numberLong": "1698917364978"
+  },
+  "__hevo__loaded_at": {
+    "$numberLong": "1698921148662"
+  },
+  "__hevo__marked_deleted": false,
+  "__hevo__source_modified_at": {
+    "$numberLong": "1698917112000"
+  }
 }
 ```
+## Getting Started
+-  1:  Clone the repository: git clone https://github.com/AnandRajaM/tinkerquest2024.git
+- 2:  Install dependencies: pip install -r requirements.txt
+- 3:  Set up MongoDB with your prefered dataset
+- 4:  Run the Flask application: python app.py
+- 5:  Access the application at http://localhost:5000
+## Authors
 
-### Download Report
-```http
-GET /api/v1/reports/download/{filename}
-```
+- Anand Raja Mohan [![linkedin](https://img.shields.io/badge/linkedin-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/anandrajam/) [![github](https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/AnandRajaM)
 
-### List All Reports
-```http
-GET /api/v1/reports/list
-```
+- Atharv Rastogi [![linkedin](https://img.shields.io/badge/linkedin-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/atharv-rastogi-b9612a278/) [![github](https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Atharv714)
 
-## 🔧 Configuration
+- Atul Akela [![linkedin](https://img.shields.io/badge/linkedin-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/atulakella/) [![github](https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/atulakella)
 
-Edit `.env` file:
-
-```env
-# Database
-MONGODB_URL=mongodb://localhost:27017/
-DATABASE_NAME=RedCliffe_Labs
-
-# AI API Keys
-GEMINI_API_KEY=your-key-here
-
-# Application
-DEBUG=False
-```
-
-## 🧪 Testing
-
-```bash
-# Run tests
-pytest
-
-# Run with coverage
-pytest --cov=app tests/
-```
-
-## 📦 Building for Production
-
-1. **Update environment variables**
-```bash
-DEBUG=False
-ALLOWED_ORIGINS=["https://yourdomain.com"]
-```
-
-2. **Use production WSGI server**
-```bash
-# FastAPI
-gunicorn main:app -w 4 -k uvicorn.workers.UvicornWorker
-
-# Flask
-gunicorn wsgi:app -w 4 -b 0.0.0.0:5000
-```
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit changes (`git commit -m 'Add AmazingFeature'`)
-4. Push to branch (`git push origin feature/AmazingFeature`)
-5. Open Pull Request
-
-## 📝 License
-
-This project is licensed under the MIT License.
-
-## 👨‍💻 Author
-
-**Anand Raja M**
-- GitHub: [@AnandRajaM](https://github.com/AnandRajaM)
-
-## 🙏 Acknowledgments
-
-- ReportLab for PDF generation
-- Google Gemini for AI insights
-- FastAPI and Flask communities
-
----
-
-**Note**: This is a professional restructure of the original project. Old files preserved with `_old` suffix.
+- Aabir [![linkedin](https://img.shields.io/badge/linkedin-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com) [![github](https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/aabir-2004)
