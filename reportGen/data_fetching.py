@@ -7,7 +7,7 @@ import os
 import json
 import time
 
-client = genai.Client( api_key="AIzaSyC-A4uUzz9_wy-0fuRAUt1u-TB3GW9wKC0")
+client = genai.Client( api_key="<api-key>")
 
 
 #MongoDB connection & data fetching
