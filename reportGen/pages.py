@@ -12,12 +12,12 @@ from barcode.writer import ImageWriter
 
 
 #Registering Fonts 
-pdfmetrics.registerFont(TTFont('SofiaPro', './Resources/Fonts/sofiapro-light.ttf')) 
-pdfmetrics.registerFont(TTFont('EastmanBold','./Resources/Fonts/Eastman-bold.ttf'))
-pdfmetrics.registerFont(TTFont('EastmanRegular','./Resources/Fonts/Eastman-regular.ttf'))
-pdfmetrics.registerFont(TTFont('SofiaProBold','./Resources/Fonts/SofiaPro-Bold.ttf'))
-pdfmetrics.registerFont(TTFont('RobotoRegular','./Resources/Fonts/Roboto-Regular.ttf'))
-pdfmetrics.registerFont(TTFont('RobotoBold','./Resources/Fonts/Roboto-Bold.ttf'))
+pdfmetrics.registerFont(TTFont('SofiaPro', './reportGen/Resources/Fonts/sofiapro-light.ttf')) 
+pdfmetrics.registerFont(TTFont('EastmanBold','./reportGen/Resources/Fonts/Eastman-bold.ttf'))
+pdfmetrics.registerFont(TTFont('EastmanRegular','./reportGen/Resources/Fonts/Eastman-regular.ttf'))
+pdfmetrics.registerFont(TTFont('SofiaProBold','./reportGen/Resources/Fonts/SofiaPro-Bold.ttf'))
+pdfmetrics.registerFont(TTFont('RobotoRegular','./reportGen/Resources/Fonts/Roboto-Regular.ttf'))
+pdfmetrics.registerFont(TTFont('RobotoBold','./reportGen/Resources/Fonts/Roboto-Bold.ttf'))
 
 styles = getSampleStyleSheet()
 # Default font
@@ -59,12 +59,12 @@ def create_rbc_report_page(out_filename, page_size, report_png, list_patient_dat
         # Checks if the y-coordinate is less than 100 , if not then it creates a new page and continues to write the report
         if init_y<=100:
             c.showPage()
-            c.drawImage("./Resources/rbc_page2.png", 0, 0, width=page_size[0], height=page_size[1])
+            c.drawImage("./reportGen/Resources/rbc_page2.png", 0, 0, width=page_size[0], height=page_size[1])
 
             #Creating Barcode
             my_barcode = EAN13(booking_id, writer=ImageWriter()) 
-            my_barcode.save("./dynamic_resource/"+booking_id)
-            c.drawImage("./dynamic_resource/"+booking_id+".png", 16, 147, width=100, height=40)
+            my_barcode.save("./outputs/"+booking_id)
+            c.drawImage("./outputs/"+booking_id+".png", 16, 147, width=100, height=40)
             c.setFont("SofiaPro", 11)
             c.drawString(85, 133,booking_id)
 
@@ -127,12 +127,12 @@ def create_urme_report_page(out_filename, page_size, report_png, list_patient_da
         # Checks if the y-coordinate is less than 100 , if not then it creates a new page and continues to write the report
         if init_y<=100:
             c.showPage()
-            c.drawImage("./Resources/urme_page2.png", 0, 0, width=page_size[0], height=page_size[1])
+            c.drawImage("./reportGen/Resources/urme_page2.png", 0, 0, width=page_size[0], height=page_size[1])
             
             #Creating Barcode
             my_barcode = EAN13(booking_id, writer=ImageWriter()) 
-            my_barcode.save("./dynamic_resource/"+booking_id)
-            c.drawImage("./dynamic_resource/"+booking_id+".png", 16, 147, width=100, height=40)
+            my_barcode.save("./outputs/"+booking_id)
+            c.drawImage("./outputs/"+booking_id+".png", 16, 147, width=100, height=40)
             c.setFont("SofiaPro", 11)
             c.drawString(85, 133,booking_id)
 
@@ -209,8 +209,8 @@ def create_report_page(out_filename, page_size, report_png, tuple_of_test,bookin
                 c.setFillColorRGB(0,0,0)
                 c.drawString(171, 694, tuple_of_test[0].title())
                 my_barcode = EAN13(booking_id, writer=ImageWriter()) 
-                my_barcode.save("./dynamic_resource/"+booking_id)
-                c.drawImage("./dynamic_resource/"+booking_id+".png", 16, 147, width=100, height=40)
+                my_barcode.save("./outputs/"+booking_id)
+                c.drawImage("./outputs/"+booking_id+".png", 16, 147, width=100, height=40)
                 c.setFont("SofiaPro", 11)
                 c.drawString(85, 133,booking_id)
                 if init_tittle == False:
@@ -300,17 +300,17 @@ def create_report_page(out_filename, page_size, report_png, tuple_of_test,bookin
 
                 
                 if test['parameter_value'] > test['upper_bound']:
-                    c.drawImage("Resources/box.png",520,576,width=65,height=35,mask='auto')
+                    c.drawImage("./reportGen/Resources/box.png",520,576,width=65,height=35,mask='auto')
                     c.setFont("SofiaPro", 11)
                     c.setFillColorRGB(1, 1, 1)
                     c.drawString(530, 590, "You: "+ test['parameter_value'] )   
                 elif test['parameter_value'] < test['lower_bound']:
-                    c.drawImage("Resources/box.png",325,576,width=65,height=35,mask='auto')
+                    c.drawImage("./reportGen/Resources/box.png",325,576,width=65,height=35,mask='auto')
                     c.setFont("SofiaPro", 11)
                     c.setFillColorRGB(1, 1, 1)
                     c.drawString(335, 590, "You: "+ test['parameter_value'] )
                 elif test['parameter_value'] > test['lower_bound'] and test['parameter_value'] < test['upper_bound']:
-                    c.drawImage("Resources/box.png",426,576,width=65,height=35,mask='auto')
+                    c.drawImage("./reportGen/Resources/box.png",426,576,width=65,height=35,mask='auto')
                     c.setFont("SofiaPro", 11)
                     c.setFillColorRGB(1, 1, 1)
                     c.drawString(436, 590, "You: "+ test['parameter_value'] ) 
@@ -437,17 +437,17 @@ def create_report_page(out_filename, page_size, report_png, tuple_of_test,bookin
 
                 
                 if test['parameter_value'] > test['upper_bound']:
-                    c.drawImage("Resources/box.png",520,344,width=65,height=35,mask='auto')
+                    c.drawImage("./reportGen/Resources/box.png",520,344,width=65,height=35,mask='auto')
                     c.setFont("SofiaPro", 11)
                     c.setFillColorRGB(1, 1, 1)
                     c.drawString(530, 358, "You: "+ test['parameter_value'] )   
                 elif test['parameter_value'] < test['lower_bound']:
-                    c.drawImage("Resources/box.png",325,344,width=65,height=35,mask='auto')
+                    c.drawImage("./reportGen/Resources/box.png",325,344,width=65,height=35,mask='auto')
                     c.setFont("SofiaPro", 11)
                     c.setFillColorRGB(1, 1, 1)
                     c.drawString(335, 358, "You: "+ test['parameter_value'] )
                 elif test['parameter_value'] > test['lower_bound'] and test['parameter_value'] < test['upper_bound']:
-                    c.drawImage("Resources/box.png",426,344,width=65,height=35,mask='auto')
+                    c.drawImage("./reportGen/Resources/box.png",426,344,width=65,height=35,mask='auto')
                     c.setFont("SofiaPro", 11)
                     c.setFillColorRGB(1, 1, 1)
                     c.drawString(436, 358, "You: "+ test['parameter_value'] ) 
@@ -503,14 +503,14 @@ def create_report_page(out_filename, page_size, report_png, tuple_of_test,bookin
         elif tests_left_to_print == 1 and final_page == False:
                 if tests_printed != 1:
                     c.showPage()
-                c.drawImage("./Resources/1test_report_page.png", 0, 0, width=page_size[0], height=page_size[1])
+                c.drawImage("./reportGen/Resources/1test_report_page.png", 0, 0, width=page_size[0], height=page_size[1])
                 c.setFont("RobotoBold", 20)
                 c.setFillColorRGB(0,0,0)
                 c.drawString(171, 694, tuple_of_test[0].title())
 
                 my_barcode = EAN13(booking_id, writer=ImageWriter()) 
-                my_barcode.save("./dynamic_resource/"+booking_id)
-                c.drawImage("./dynamic_resource/"+booking_id+".png", 16, 147, width=100, height=40)
+                my_barcode.save("./outputs/"+booking_id)
+                c.drawImage("./outputs/"+booking_id+".png", 16, 147, width=100, height=40)
                 c.setFont("SofiaPro", 11)
                 c.drawString(85, 133,booking_id)
                 
@@ -594,17 +594,17 @@ def create_report_page(out_filename, page_size, report_png, tuple_of_test,bookin
 
                 
                 if test['parameter_value'] > test['upper_bound']:
-                    c.drawImage("Resources/box.png",520,576,width=65,height=35,mask='auto')
+                    c.drawImage("./reportGen/Resources/box.png",520,576,width=65,height=35,mask='auto')
                     c.setFont("SofiaPro", 11)
                     c.setFillColorRGB(1, 1, 1)
                     c.drawString(530, 590, "You: "+ test['parameter_value'] )   
                 elif test['parameter_value'] < test['lower_bound']:
-                    c.drawImage("Resources/box.png",325,576,width=65,height=35,mask='auto')
+                    c.drawImage("./reportGen/Resources/box.png",325,576,width=65,height=35,mask='auto')
                     c.setFont("SofiaPro", 11)
                     c.setFillColorRGB(1, 1, 1)
                     c.drawString(335, 590, "You: "+ test['parameter_value'] )
                 elif test['parameter_value'] > test['lower_bound'] and test['parameter_value'] < test['upper_bound']:
-                    c.drawImage("Resources/box.png",426,576,width=65,height=35,mask='auto')
+                    c.drawImage("./reportGen/Resources/box.png",426,576,width=65,height=35,mask='auto')
                     c.setFont("SofiaPro", 11)
                     c.setFillColorRGB(1, 1, 1)
                     c.drawString(436, 590, "You: "+ test['parameter_value'] ) 
@@ -713,7 +713,7 @@ def create_body_report_page(out_filename, page_size, report_png, highlighted_tes
             if test[0] not in [item[0] for item in highlighted_tests]:
                 init_y2+= -45
                 not_highlighted_printed+=1
-                c.drawImage("./Resources/green_box2.png",420,init_y2-22,width=125,height=26,mask='auto')
+                c.drawImage("././reportGen/Resources/green_box2.png",420,init_y2-22,width=125,height=26,mask='auto')
             
                 heading = Paragraph(str(test[0]), heading_style) 
                 heading.wrap(150, 15)
@@ -730,7 +730,7 @@ def create_body_report_page(out_filename, page_size, report_png, highlighted_tes
     # If there are more than 10 tests which are not highlighted then it prints the overflow message
     if overflow_tests != []:
         init_y2+= -45        
-        c.drawImage("./Resources/green_box2.png",420,init_y2-22,width=125,height=26,mask='auto')
+        c.drawImage("./reportGen/Resources/green_box2.png",420,init_y2-22,width=125,height=26,mask='auto')
 
         heading = Paragraph("+" + str(len(overflow_tests)) + " Tests", heading_style)   
         heading.wrap(150, 15)

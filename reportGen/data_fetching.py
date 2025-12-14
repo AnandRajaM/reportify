@@ -1,14 +1,13 @@
 #Imports
 from openai import OpenAI
-import google.generativeai as genai
+from google import genai
 import pymongo
 from pymongo import MongoClient
+import os
+import json
+import time
 
-
-
-#Client creations & tokens
-genai.configure(api_key = "<api-key>")
-model = genai.GenerativeModel('gemini-pro')
+client = genai.Client( api_key="AIzaSyC-A4uUzz9_wy-0fuRAUt1u-TB3GW9wKC0")
 
 
 #MongoDB connection & data fetching
@@ -38,21 +37,31 @@ def get_patient_docs(customer_name,booking_date):
 
 #Medical data fetching
 def get_data(test_name):  
-    response = model.generate_content("Give me a summary of this test in 30 words only : "+test_name)
+    print("v1")
+    time.sleep(10)
+    response = client.models.generate_content(
+    model="gemini-2.5-flash", contents="Give me a summary of this test in 30 words only : "+test_name
+)
     return response.text.strip()
 
 
 def get_data_cause(test_name, high_low_normal): 
-    response = model.generate_content(f"Generate 3 possible causes for {test_name} {high_low_normal} result . Each cause should be 10 words or less and should start with a index number.")
+    time.sleep(10)
+    response = client.models.generate_content(
+    model="gemini-2.5-flash", contents=f"Generate 3 possible causes for {test_name} {high_low_normal} result . Each cause should be 10 words or less and should start with a index number.")
     return response.text.strip().split('\n')
     
 def get_data_cause_para(test_name, high_low): 
-    response = model.generate_content(f"Give me a general paragraph about {test_name} {high_low} result in only 30 words or less.")
+    time.sleep(10)
+    response = client.models.generate_content(
+    model="gemini-2.5-flash", contents=f"Give me a general paragraph about {test_name} {high_low} result in only 30 words or less.")
     return response.text.strip()
 
 
 def get_data_consider(test_name,high_low):
-    response = model.generate_content(f"What are the recommended next steps for {test_name} {high_low} results? Please provide concise guidance within 50 words and do not provide causes.")
+    time.sleep(10)
+    response = client.models.generate_content(
+    model="gemini-2.5-flash", contents=f"What are the recommended next steps for {test_name} {high_low} results? Please provide concise guidance within 50 words and do not provide causes.")
     return response.text.strip()
 
 
@@ -68,3 +77,16 @@ def merge_lists(existing_list, new_list):
             existing_list.append([new_item[0], [new_item[1]]])
         
     return existing_list
+
+def useSampleData():
+    print("v0")
+    result = json.load(open('./reportGen/sampleData/sample1.json'))
+
+    booking_id = result['booking_id']
+    patient_tests = []
+
+    patient_tests.append(
+        (result['test_name'], result['test_values'])
+    )
+
+    return patient_tests, booking_id
